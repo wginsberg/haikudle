@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
 
 export default function useDailyHaiku() {
+    const sourceURL = process.env.NODE_ENV === 'production'
+        ? "https://raw.githubusercontent.com/wginsberg/haikudl/master/daily.txt"
+        : "daily.txt"
 
-    // TODO - Check (process.env.NODE_ENV === 'production') here
-    
-    const sourceURL = "daily.txt"
-
-    const [haikuString, setResult] = useState("")
+        const [haikuString, setResult] = useState("")
     const [error, setError] = useState()
 
     useEffect(() => {
@@ -14,7 +13,7 @@ export default function useDailyHaiku() {
             .then(response => response.text())
             .then(setResult)
             .catch(setError)
-    }, [])
+    }, [sourceURL])
 
     return { haikuString, error }
 }
