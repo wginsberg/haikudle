@@ -1,23 +1,23 @@
 import Tile from "./Tile";
+import { charactersTo2DStringArray } from "../util";
 
 export default function Haiku({ characters }) {
-    const lines = []
-    let j = 0;
-    for (let i=0; i < characters.length; i++) {
-        if (i === characters.length - 2) {
-            lines.push(characters.slice(j, i))
-        }
-        if (characters[i] === " " && characters[i+1] === "/" && characters[i+2] === " ") {
-            lines.push(characters.slice(j, i))
-            j = i + 3
-        }
-    }
 
-    return lines.map(line => {
+    const wordArray2d = charactersTo2DStringArray(characters)
+
+    return wordArray2d.map(line => {
         return (
             <>
-                <p>{line.map(character => (<Tile character={character} />))}</p>
-                <br />
+                <div className="line">
+                    {line.map(word => {
+                        return (
+                            <span className="word">
+                                {word.split("").map(character => (<Tile character={character} />))}
+                            </span>
+                        )
+                    })}
+                </div>
+            <br />
             </>
         )
     })

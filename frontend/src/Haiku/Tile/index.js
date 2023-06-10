@@ -6,5 +6,9 @@ export default function Tile({ character }) {
         "tile-censored": character === "*"
     })
 
-    return <span className={className}>{character}</span>
+    const formattedCharacter = character === "*"
+        ? ""
+        : character
+
+    return <span className={className}>{formattedCharacter}</span>
 }

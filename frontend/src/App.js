@@ -13,7 +13,6 @@ function App() {
     ? (<p>Something went wrong :/</p>)
     : (
       <>
-        <p>Here is today's challenge:</p>
         <Haiku characters={haikuWithHints} />
       </>
     )

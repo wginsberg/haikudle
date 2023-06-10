@@ -27,3 +27,13 @@ body {
 .tile-censored {
   background-color: lightgray;
 }
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word {
+  display: flex;
+  margin: 4px 12px;
+}
