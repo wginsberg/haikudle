@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+}
+
+.tile {
+  display: inline-flex;
+  background-color: greenyellow;
+  justify-content: center;
+  font-size: large;
+  border: 2px solid slategray;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.tile-blank {
+  background-color: initial;
+  border: initial;
+}
+
+.tile-censored {
+  background-color: lightgray;
+}
