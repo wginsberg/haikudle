@@ -3,7 +3,7 @@ name: Update daily haiku
 on:
   workflow_dispatch:
   schedule:
-  - cron: "0 13 * * 1"
+  - cron: "9 3 * * *"
 
 jobs:
   update-data:
