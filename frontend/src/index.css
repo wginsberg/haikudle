@@ -9,6 +9,16 @@ body {
   justify-content: center;
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.haiku {
+
+}
+
 .tile {
   display: inline-flex;
   background-color: greenyellow;
@@ -36,4 +46,44 @@ body {
 .word {
   display: flex;
   margin: 4px 12px;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.keyboardRow {
+  display: flex;
+  width: 100%;
+}
+
+.keyboardRow-middle {
+  width: 90%;
+}
+
+.keyboardButton {
+  display: inline-flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  min-width: 28px;
+  min-height: 28px;
+  border: 2px solid white;
+  text-transform: uppercase;
+  padding:2px;
+  box-sizing: initial;
+  color: initial;
+}
+
+.keyboardButton-selected {
+  background-color: greenyellow;
+}
+
+.keyboardButton[type="submit"] {
+  font-weight: bold;
 }
