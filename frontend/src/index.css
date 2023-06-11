@@ -7,12 +7,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   justify-content: center;
+  height: calc(100svh - 24px);
+  padding: 12px;
+}
+
+#root {
+  height: 100%;
 }
 
 .app {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .haiku {
