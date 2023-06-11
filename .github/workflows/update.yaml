@@ -1,1 +1,22 @@
-# TODO
+name: Update daily haiku
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "0 13 * * 1"
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+    -  run: node generate > daily.txt
+
+    - name: Git Auto Commit
+      uses: stefanzweifel/git-auto-commit-action@v4.14.1
+      with:
+        commit_message: Update daily haiku

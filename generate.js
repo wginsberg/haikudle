@@ -1,37 +1,22 @@
-const NON_HINT_CHARS = new Set(" /$_',.")
-const FREE_HINT_CHARS = new Set("rstlne")
+const fs = require('fs');
 
-function censorHaiku(haiku = []) {
-    return haiku.map(haikuLetter =>
-        haikuLetter.match(/[^A-z]/)
-            ? haikuLetter
-            : "_"
-        )
+const FIRST_DATE = new Date("2023-06-10")
+const TWENTY_FOUR_HOURS = 60*60*1000*24
+const FILE_NAME = "lines.txt"
+
+const today = new Date()
+
+const todayIndex = Math.floor((today - FIRST_DATE) / TWENTY_FOUR_HOURS)
+
+let data
+try {
+  data = fs.readFileSync(FILE_NAME);
+} catch (err) {
+  console.error(err);
+  process.exit(1)
 }
 
-const rawHaiku = "delicate savage / you'll never hold the cinder / but still you will burn $"
-const haikuArray = rawHaiku.split("")
+const lines = data.toString().split("\n")
+const line = lines[todayIndex]
 
-const censored = censorHaiku(haikuArray)
-
-console.log({ rawHaiku, censored })
-
-function addHints(haiku = [], letters = "=") {
-    const letterSet = new Set(letters)
-    return haiku.map(haikuLetter => 
-        letterSet.has(haikuLetter) || NON_HINT_CHARS.has(haikuLetter)
-            ? haikuLetter
-            : "*"
-    )
-}
-
-const hints = [...FREE_HINT_CHARS, "d","v"]
-const withHints = addHints(haikuArray, hints)
-
-console.log({ hints, withHints })
-
-// index.js
-// process.stdin.on("data", data => {
-//     data = data.toString().toUpperCase()
-//     process.stdout.write(data + "\n")
-// })
+console.log(line)
