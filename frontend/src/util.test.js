@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, GIVEN, GUESSED, SPECIAL } from "./util"
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, GIVEN, GUESSED } from "./util"
 
 test("addHints", () => {
     const rawHaiku = "test / haiku / ai'nt one. $"
@@ -57,4 +57,25 @@ test("addInput", () => {
 
   expect(actual.characters).toEqual(expectedCharacters)
   expect(actual.meta).toEqual(expectedCharacterMeta)
+})
+
+test("generateHintSequence", () => {
+  const haiku = [
+    't', 'e', 's', 't', ' ', '/', ' ',
+    'h', 'a', 'i', 'k', 'u', ' ', '/',' ',
+    'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
+  ]
+
+  const censoredHaiku = [
+    't', 'e', 's', 't', ' ', '/', ' ',
+    '*', '*', '*', '*', '*', ' ', '/',' ',
+    '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+  ]
+  
+  const input = "boioka"
+
+  const actual = generateHintSequence(haiku, censoredHaiku, input)
+  const expected = "ahikou"
+
+  expect(actual).toEqual(expected)
 })

@@ -11,6 +11,7 @@ export default function useDailyHaiku() {
     useEffect(() => {
         fetch(sourceURL)
             .then(response => response.text())
+            .then(text => text.endsWith("\n") ? text.slice(0, -1) : text)
             .then(setResult)
             .catch(setError)
     }, [sourceURL])

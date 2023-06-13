@@ -24,7 +24,7 @@ export default function Keyboard({ selectedCharacters = new Set(), addCharacter,
         document.addEventListener('keydown', listener)
         const cleanup = () => document.removeEventListener('keydown', listener)
         return cleanup
-    }, [removeCharacter, addCharacter])
+    }, [selectedCharacters, removeCharacter, addCharacter])
 
     // Handle events from keyboard UI
     const onButtonClick = character => {

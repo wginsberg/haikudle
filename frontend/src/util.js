@@ -44,3 +44,20 @@ export function addInputToHaiku(haiku = [], input = "") {
         meta
     }
 }
+
+/*
+* Returns a string of characters that can be given as hints for the censored haiku
+* Each character returned will fill in a previously un-guessed or incorrectly guessed tile
+*/
+export function generateHintSequence(haiku = [], censoredHaiku = [], input = "") {
+    const haikuWithInput = addInputToHaiku(censoredHaiku, input).characters
+    const missingChars = new Set()
+    for (let i = 0; i < haiku.length; i++) {
+        if (!haikuWithInput[i].match(/[*a-z]/)) continue
+        if (haikuWithInput[i] !== haiku[i]) {
+            missingChars.add(haiku[i])
+        }
+    }
+
+    return [...missingChars].sort().join("")
+}

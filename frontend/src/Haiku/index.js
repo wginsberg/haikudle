@@ -9,8 +9,6 @@ export default function Haiku({ haiku, haikuCensored, input }) {
     const censoredWordArray2d = charactersTo2DStringArray(characters)
     const metaArray2d = charactersTo2DStringArray(meta)
 
-    console.log({ wordArray2d, censoredWordArray2d})
-
     return (
         <div className="haiku">
             {censoredWordArray2d.map((line, i) => (

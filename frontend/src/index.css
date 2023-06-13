@@ -36,6 +36,8 @@ body {
   border: 2px solid slategray;
   min-width: 24px;
   min-height: 24px;
+  margin: 0 1px;
+  animation: 1s ease-in flip;
 }
 
 @keyframes flip {
@@ -55,14 +57,17 @@ body {
 .tile-blank {
   background-color: initial;
   border: initial;
+  animation: none;
 }
 
 .tile-censored {
   background-color: lightgray;
+  animation: none;
 }
 
 .tile-input {
   background-color: lightcoral;
+  animation: none;
 }
 
 .tile-complete {
@@ -120,4 +125,18 @@ body {
 
 .keyboardButton[type="submit"] {
   font-weight: bold;
+}
+
+.helpActions {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.helpActions button {
+  height: 48px;
+  width: 100%;
+  max-width: 128px;
+  font-size: large;
+  padding: 8px;
 }
