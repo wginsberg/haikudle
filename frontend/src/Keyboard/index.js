@@ -1,5 +1,6 @@
 import classnames from "classnames"
 import Button from "./Button"
+import { useEffect } from "react"
 
 const LETTER_ROWS = [
     "qwertyuiop".split(""),
@@ -8,6 +9,22 @@ const LETTER_ROWS = [
 ]
 
 export default function Keyboard({ selectedCharacters = new Set(), addCharacter, removeCharacter }) {
+    // Handle events from device keyboard (desktop)
+    useEffect(() => {
+        const listener = (event) => {
+            const { key } = event
+            if (key === "Backspace") {
+                removeCharacter()
+            } else if (key.toLowerCase().match(/^[a-z]$/)) {
+                addCharacter(key)
+            }
+        }
+        document.addEventListener('keydown', listener)
+        const cleanup = () => document.removeEventListener('keydown', listener)
+        return cleanup
+    }, [removeCharacter, addCharacter])
+
+    // Handle events from keyboard UI
     const onButtonClick = character => {
         if (character === "BACKSPACE") {
             removeCharacter()
