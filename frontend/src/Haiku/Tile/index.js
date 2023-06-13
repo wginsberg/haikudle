@@ -1,10 +1,11 @@
 import classnames from "classnames"
+import { GUESSED } from "../../util"
 
-export default function Tile({ character }) {
+export default function Tile({ character, meta }) {
     const className = classnames("tile", {
         "tile-blank": character === " ",
         "tile-censored": character === "*",
-        "tile-input": character.match(/[qwyuiopadfghjkzxcvbm]/)
+        "tile-input": meta === GUESSED
     })
 
     const formattedCharacter = character === "*"

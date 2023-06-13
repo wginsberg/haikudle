@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku } from "./util"
+import { addHints, charactersTo2DStringArray, addInputToHaiku, GIVEN, GUESSED, SPECIAL } from "./util"
 
 test("addHints", () => {
     const rawHaiku = "test / haiku / ai'nt one. $"
@@ -41,11 +41,20 @@ test("addInput", () => {
   const input = "tehaikuai"
 
   const actual = addInputToHaiku(haiku, input)
-  const expected = [
+  const expectedCharacters = [
     't', 'e', 's', 't', ' ', '/', ' ',
     'h', 'a', 'i', 'k', 'u', ' ', '/',' ',
     'a', 'i', '\'', 'n', 't', ' ', 'o', '*', 'e', '.', ' ', '$'
   ]
+  const expectedCharacterMeta = [
+    GUESSED, GUESSED, GIVEN, GIVEN, ' ', '/', ' ',
+    GUESSED, GUESSED, GUESSED, GUESSED, GUESSED, ' ', '/', ' ',
+    GUESSED, GUESSED, GIVEN, GIVEN, GIVEN, ' ', GIVEN, '*', GIVEN, GIVEN, ' ', '$'
+  ]
 
-  expect(actual).toEqual(expected)
+  expect(actual.characters.length).toEqual(expectedCharacters.length)
+  expect(actual.meta.length).toEqual(expectedCharacterMeta.length)
+
+  expect(actual.characters).toEqual(expectedCharacters)
+  expect(actual.meta).toEqual(expectedCharacterMeta)
 })
