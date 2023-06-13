@@ -1,6 +1,6 @@
 import classnames from "classnames"
 
-export default function Button({ character, isSelected }) {
+export default function Button({ character, isSelected, onClick }) {
     const className = classnames("keyboardButton", {
         // "button-lg": character === "ENTER" || character === "BACKSPACE"
         "keyboardButton-selected": isSelected
@@ -16,13 +16,13 @@ export default function Button({ character, isSelected }) {
 
     if (character === "BACKSPACE") {
         return (
-            <button type="reset" className={className}>
+            <button type="reset" className={className} onClick={() => onClick("BACKSPACE")}>
                 ⬅️
             </button>
         )
     }
     return (
-        <button className={className} disabled={isSelected}>
+        <button className={className} onClick={() => onClick(character)}>
             {character}
         </button>
     )

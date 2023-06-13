@@ -28,10 +28,6 @@ body {
   height: 100%;
 }
 
-.haiku {
-
-}
-
 .tile {
   display: inline-flex;
   background-color: greenyellow;
@@ -49,6 +45,10 @@ body {
 
 .tile-censored {
   background-color: lightgray;
+}
+
+.tile-input {
+  background-color: lightcoral;
 }
 
 .line {

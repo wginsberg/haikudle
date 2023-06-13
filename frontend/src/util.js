@@ -17,3 +17,20 @@ export function charactersTo2DStringArray(characters=[]) {
         .split(" / ")
         .map(line => line.split(" "))
 }
+
+export function addInputToHaiku(haiku = [], input = "") {
+    const newHaiku = [...haiku]
+    let i = 0
+    for (const character of input) {
+        while (i < haiku.length) {
+            if (haiku[i] === "*") {
+                newHaiku[i] = character
+                i++
+                break
+            } else {
+                i++
+            }
+        }
+    }
+    return newHaiku
+}
