@@ -16,7 +16,9 @@ export default function Keyboard({ selectedCharacters = new Set(), addCharacter,
             if (key === "Backspace") {
                 removeCharacter()
             } else if (key.toLowerCase().match(/^[a-z]$/)) {
-                addCharacter(key)
+                if (!selectedCharacters.has(key)) {
+                    addCharacter(key)
+                }
             }
         }
         document.addEventListener('keydown', listener)

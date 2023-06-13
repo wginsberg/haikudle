@@ -2,7 +2,6 @@ import classnames from "classnames"
 
 export default function Button({ character, isSelected, onClick }) {
     const className = classnames("keyboardButton", {
-        // "button-lg": character === "ENTER" || character === "BACKSPACE"
         "keyboardButton-selected": isSelected
     })
 
@@ -22,7 +21,11 @@ export default function Button({ character, isSelected, onClick }) {
         )
     }
     return (
-        <button className={className} onClick={() => onClick(character)}>
+        <button
+            className={className}
+            onClick={() => onClick(character)}
+            disabled={isSelected}
+        >
             {character}
         </button>
     )
