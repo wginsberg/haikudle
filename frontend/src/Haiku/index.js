@@ -8,19 +8,24 @@ export default function Haiku({ characters }) {
     return (
         <div className="haiku">
             {wordArray2d.map((line, i) => {
+                console.log(line, i)
                 return (
-                    <>
-                        <div className="line" key={i}>
-                            {line.map(word => {
+                    <div key={i}>
+                        <div className="line">
+                            {line.map((word, j) => {
                                 return (
-                                    <span className="word" key={word}>
-                                        {word.split("").map((character, j) => (<Tile character={character} key={`${character}-${i}-${j}`} />))}
+                                    <span className="word" key={j}>
+                                        {word
+                                            .split("")
+                                            .map((character, k) => (
+                                                <Tile character={character} key={`${i}-${j}-${k}`} />
+                                            ))}
                                     </span>
                                 )
                             })}
                         </div>
                         <br />
-                    </>
+                    </div>
                 )
             })}
         </div>
