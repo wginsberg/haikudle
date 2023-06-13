@@ -23,7 +23,11 @@ function App() {
     ? (<p>Something went wrong :/</p>)
     : (
       <div className="app">
-        <Haiku input={input} haiku={haikuWithHints} />
+        <Haiku
+          input={input}
+          haiku={haikuString.split("")}
+          haikuCensored={haikuWithHints}
+        />
         <br />
         <Keyboard selectedCharacters={FREE_HINT_CHARS} addCharacter={addInput} removeCharacter={removeInput} />
       </div>

@@ -51,6 +51,12 @@ body {
   background-color: lightcoral;
 }
 
+.tile-complete {
+  background-color: greenyellow;
+  border-color: black;
+  border-radius: 4px;
+}
+
 .line {
   display: flex;
   flex-wrap: wrap;
