@@ -5,7 +5,7 @@ import { useEffect } from "react"
 const LETTER_ROWS = [
     "qwertyuiop".split(""),
     "asdfghjkl".split(""),
-    ["ENTER", ..."zxcvbnm".split(""), "BACKSPACE"]
+    [..."zxcvbnm".split(""), "BACKSPACE"]
 ]
 
 export default function Keyboard({ selectedCharacters = new Set(), addCharacter, removeCharacter }) {
@@ -38,11 +38,9 @@ export default function Keyboard({ selectedCharacters = new Set(), addCharacter,
     return (
         <div className="keyboard">
             {LETTER_ROWS.map((letters, i) => {
-                const className = classnames("keyboardRow", {
-                    "keyboardRow-middle": i === 1
-                })
+                const className = classnames("keyboardRow", `keyboardRow-${i+1}`)
                 return (
-                    <div className={className} key={i}>
+                    <>
                         {letters.map(letter => {
                             const isSelected = selectedCharacters.has(letter)
                             return (
@@ -50,11 +48,12 @@ export default function Keyboard({ selectedCharacters = new Set(), addCharacter,
                                     character={letter}
                                     isSelected={isSelected}
                                     onClick={onButtonClick}
+                                    className={className}
                                     key={letter}
                                 />
                             )
                         })}
-                    </div>)
+                    </>)
             })}
         </div>
     )

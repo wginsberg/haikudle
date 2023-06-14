@@ -1,17 +1,10 @@
 import classnames from "classnames"
 
-export default function Button({ character, isSelected, onClick }) {
-    const className = classnames("keyboardButton", {
-        "keyboardButton-selected": isSelected
-    })
-
-    if (character === "ENTER") {
-        return (
-            <button type="submit" className={className}>
-                ENTER
-            </button>
-        )
-    }
+export default function Button(props) {
+    const { character, isSelected, onClick } = props
+    const className = classnames(
+        ["keyboardButton", props.className],
+        { "keyboardButton-selected": isSelected})
 
     if (character === "BACKSPACE") {
         return (
