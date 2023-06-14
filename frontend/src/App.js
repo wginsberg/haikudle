@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Haiku from './Haiku';
 import Keyboard from './Keyboard';
 
-import useDailyHaiku from './hooks';
+import { useDailyHaiku } from './hooks';
 import { addHints, generateHintSequence, FREE_HINT_CHARS } from './util';
 
 function App() {

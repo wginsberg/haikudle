@@ -17,7 +17,6 @@ export default function Button(props) {
         <button
             className={className}
             onClick={() => onClick(character)}
-            disabled={isSelected}
         >
             {character}
         </button>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export default function useDailyHaiku() {
+export function useDailyHaiku() {
     const sourceURL = process.env.NODE_ENV === 'production'
         ? "https://raw.githubusercontent.com/wginsberg/haikudl/master/daily.txt"
         : "daily.txt"
@@ -17,4 +17,21 @@ export default function useDailyHaiku() {
     }, [sourceURL])
 
     return { haikuString, error }
+}
+
+export function useTemporaryState(initalState, timeout = 100) {
+    const [state, setState] = useState(initalState)
+    
+    const setTemporaryState = newState => {
+        setState(newState)
+        setTimeout(
+            () => setState(state =>
+                state === newState
+                    ? initalState
+                    : newState),
+            timeout
+        )
+    }
+
+    return [state, setTemporaryState]
 }

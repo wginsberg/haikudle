@@ -107,7 +107,7 @@ body {
 
 .keyboardButton {
   display: inline-flex;
-  aspect-ratio: 1;
+  aspect-ratio: 0.5;
   justify-content: center;
   align-items: center;
   background-color: lightgray;
@@ -116,14 +116,63 @@ body {
   padding:2px;
   box-sizing: initial;
   color: initial;
+  cursor: pointer;
+}
+
+@media (min-width: 420px) {
+  .keyboardButton {
+    aspect-ratio: 1;
+  }  
+}
+
+@supports not (aspect-ratio) { 
+  height: 32px
 }
 
 .keyboardButton-selected {
   background-color: greenyellow;
+  cursor: initial;
 }
 
 .keyboardButton[type="submit"] {
   font-weight: bold;
+}
+
+.keyboardButton-pressed {
+  animation: keyflash 0.2s both;
+}
+
+.keyboardButton-pressed.keyboardButton-selected {
+  animation: keyflash-disabled 0.2s both;
+}
+
+@keyframes keyflash {
+  0% {
+    border: 2px solid white;
+  }
+
+  50% {
+    border: 4px solid black;
+  }
+
+  100% {
+    border: 2px solid white;
+  }
+}
+
+
+@keyframes keyflash-disabled {
+  0% {
+    border: 2px solid white;
+  }
+
+  50% {
+    border: 4px solid firebrick;
+  }
+
+  100% {
+    border: 2px solid white;
+  }
 }
 
 .helpActions {
