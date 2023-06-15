@@ -32,12 +32,21 @@ body {
   display: inline-flex;
   background-color: greenyellow;
   justify-content: center;
+  align-items: center;
   font-size: large;
   border: 2px solid slategray;
   min-width: 24px;
   min-height: 24px;
   margin: 0 1px;
   animation: 1s ease-in flip;
+}
+
+
+@media (min-width: 420px) {
+  .tile {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 @keyframes flip {
@@ -182,9 +191,18 @@ body {
 }
 
 .helpActions button {
-  height: 48px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
   width: 100%;
-  max-width: 128px;
-  font-size: large;
-  padding: 8px;
+  max-width: 72px;
+}
+
+@media (min-width: 420px) {
+  .helpActions button {
+    height: 48px;
+    font-size: large;
+    max-width: 128px;
+  }
 }

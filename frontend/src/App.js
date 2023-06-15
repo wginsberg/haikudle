@@ -39,12 +39,10 @@ function App() {
           haiku={haikuString.split("")}
           haikuCensored={haikuWithHints}
         />
-        <br />
         <div className="helpActions">
           <button onClick={addHint}>Hint</button>
           <button onClick={giveup}>Give up</button>
         </div>
-        <br />
         <Keyboard selectedCharacters={hints} addCharacter={addInput} removeCharacter={removeInput} />
       </div>
     )
