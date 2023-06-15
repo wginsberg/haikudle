@@ -48,28 +48,25 @@ export default function Keyboard({ selectedCharacters = new Set(), addCharacter,
 
     return (
         <div className="keyboard">
-            {LETTER_ROWS.map((letters, i) => {
-                return (
-                    <>
-                        {letters.map(letter => {
-                            const isSelected = selectedCharacters.has(letter)
-                            const className = classnames(
-                                "keyboardRow",
-                                `keyboardRow-${i+1}`,
-                                { "keyboardButton-pressed": letter === lastPress }
-                                )            
-                            return (
-                                <Button
-                                    character={letter}
-                                    isSelected={isSelected}
-                                    onClick={onButtonClick}
-                                    className={className}
-                                    key={letter}
-                                />
-                            )
-                        })}
-                    </>)
-            })}
+            {LETTER_ROWS.map((letters, i) => 
+                letters.map(letter => {
+                    const isSelected = selectedCharacters.has(letter)
+                    const className = classnames(
+                        "keyboardRow",
+                        `keyboardRow-${i+1}`,
+                        { "keyboardButton-pressed": letter === lastPress }
+                        )            
+                    return (
+                        <Button
+                            character={letter}
+                            isSelected={isSelected}
+                            onClick={onButtonClick}
+                            className={className}
+                            key={letter}
+                        />
+                    )
+                })
+            )}
         </div>
     )
 }
