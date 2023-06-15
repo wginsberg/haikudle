@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, GIVEN, GUESSED } from "./util"
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, GIVEN, GUESSED } from "./util"
 
 test("addHints", () => {
     const rawHaiku = "test / haiku / ai'nt one. $"
@@ -78,4 +78,70 @@ test("generateHintSequence", () => {
   const expected = "ahikou"
 
   expect(actual).toEqual(expected)
+})
+
+describe("isSolved", () => {
+  const haiku = "test / haiku / ai'nt one. $"
+
+  it("returns true when all characters are entered correctly", () => {
+    const censoredHaiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      'h', 'a', 'i', 'k', 'u', ' ', '/',' ',
+      'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const actual = isSolved(censoredHaiku, haiku)
+
+    expect(actual).toEqual(true)
+  })
+
+  it("returns false when a character is entered incorrectly", () => {
+    const censoredHaiku = [
+      'b', 'e', 's', 't', ' ', '/', ' ',
+      'h', 'a', 'i', 'k', 'u', ' ', '/',' ',
+      'a', 'i', '\'', 'n', 't', ' ', 'b', 'a', 'd', '.', ' ', '$'
+    ]
+
+    const actual = isSolved(censoredHaiku, haiku)
+
+    expect(actual).toEqual(false)
+  })
+
+  it("returns false when any '*' is present", () => {
+    const censoredHaiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', '*', '*', '*', ' ', '/',' ',
+      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const actual = isSolved(censoredHaiku, haiku)
+
+    expect(actual).toEqual(false)
+  })
+})
+
+describe("isHintAlowed", () => {
+  const haiku = "test / haiku / ai'nt one. $"
+
+  it("provides a hint when more than 2 distinct characters are remaining", () => {
+    const censoredHaiku = [
+      '*', 'e', 's', 't', ' ', '/', ' ',
+      '*', 'a', 'i', 'k', 'u', ' ', '/',' ',
+      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+    ]
+    
+    const actual = isHintAllowed(haiku, censoredHaiku)
+    expect(actual).toEqual(true)
+  })
+
+  it("does not provide a hint when only 4 distinct characters are remaining", () => {
+    const censoredHaiku = [
+      '*', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', 'i', 'k', '*', ' ', '/',' ',
+      '*', 'i', '\'', 'n', '*', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+    
+    const actual = isHintAllowed(haiku, censoredHaiku)
+    expect(actual).toEqual(false)
+  })
 })

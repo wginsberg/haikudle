@@ -61,3 +61,24 @@ export function generateHintSequence(haiku = [], censoredHaiku = [], input = "")
 
     return [...missingChars].sort().join("")
 }
+
+export function isSolved(censoredHaiku = [], haiku = "") {
+    for (let i = 0; i < censoredHaiku.length; i++) {
+        if (censoredHaiku[i] !== haiku[i]) {
+            return false
+        }
+    }
+    return true
+}
+
+export function isHintAllowed(haiku = "", censoredHaiku = []) {
+    const remaining = new Set()
+
+    for (let i = 0; i < censoredHaiku.length; i++) {
+        if (censoredHaiku[i] === "*") {
+            remaining.add(haiku[i])
+            if (remaining.size > 4) return true
+        }
+    }
+    return false
+}
