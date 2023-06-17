@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react'
 import Haiku from './Haiku';
 import Keyboard from './Keyboard';
 
-import { useDailyHaiku } from './hooks';
-import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed } from './util';
+import { useDailyHaiku, useLocalStorage } from './hooks';
+import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats } from './util';
 import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants';
 import Scoreboard from './Scoreboard';
 
 function App() {
-  const { haikuString, error } = useDailyHaiku()
+  const { haikuString, date, error } = useDailyHaiku()
   const [input, setInput] = useState("")
   const [hints, setHints] = useState(FREE_HINT_CHARS)
   const [gameState, setGameState] = useState(GAME_STATE_PLAY)
+  const [winStats, setWinStats] = useLocalStorage("stats", { today: date, totalWins: 0 })
 
   const haikuWithHints = addHints(haikuString.split(""), hints)
   const disableHint = !isHintAllowed(haikuString, haikuWithHints)
@@ -21,10 +22,12 @@ function App() {
     if (haikuWithHints.length === 0) return
     
     const censoredHaiku = addInputToHaiku(haikuWithHints, input).characters
-    if (isSolved(censoredHaiku, haikuString)) {
+    if (gameState === GAME_STATE_PLAY && isSolved(censoredHaiku, haikuString)) {
       setGameState(state => state === GAME_STATE_PLAY ? GAME_STATE_WON : state)
+      
+      setWinStats(incrementWinStats({ ...winStats, today: date }))
     }
-  }, [haikuWithHints, haikuString, input])
+  }, [haikuWithHints, haikuString, input, winStats, setWinStats, date, gameState])
 
   const addInput = character => {
     setInput(input => input + character)
@@ -43,6 +46,7 @@ function App() {
   const giveup = () => {
     setHints(new Set("abcdefghijklmnopqrstuvwxyz"))
     setGameState(GAME_STATE_LOST)
+    setWinStats({ ...winStats, today: date })
   }
 
   if (error) {
@@ -73,7 +77,7 @@ function App() {
             haiku={haikuString.split("")}
             haikuCensored={haikuWithHints}
           />
-          <Scoreboard gameState={gameState} />
+          <Scoreboard gameState={gameState} winStats={winStats}/>
       </div>)
     default:
       return (<p>Something went wrong :/</p>)

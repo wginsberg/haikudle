@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, GIVEN, GUESSED } from "./util"
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, incrementWinStats, GIVEN, GUESSED } from "./util"
 
 test("addHints", () => {
     const rawHaiku = "test / haiku / ai'nt one. $"
@@ -143,5 +143,54 @@ describe("isHintAlowed", () => {
     
     const actual = isHintAllowed(haiku, censoredHaiku)
     expect(actual).toEqual(false)
+  })
+})
+
+describe("incrementWinStats", () => {
+  it("increases the total wins by one", () => {
+    expect(incrementWinStats({ today: "2023-01-01" }).totalWins).toEqual(1)
+    expect(incrementWinStats({ today: "2023-02-01", streakStart: "2023-01-01", streakEnd: "2023-01-06", totalWins: 15 }).totalWins).toEqual(16)
+  })
+
+  it("sets a new streak", () => {  
+    const { streakStart, streakEnd } = incrementWinStats({ today: "2023-01-01" })
+  
+    expect(streakStart).toEqual("2023-01-01")
+    expect(streakEnd).toEqual("2023-01-01")
+  })
+
+  it("resets an old streak", () => {
+    const oldStreakStart = "2023-01-01"
+    const oldStreakEnd = "2023-01-05"
+    const today = "2023-06-01"
+  
+    const { streakStart, streakEnd } = incrementWinStats({today, streakStart: oldStreakStart, streakEnd: oldStreakEnd })
+  
+    expect(streakStart).toEqual(today)
+    expect(streakEnd).toEqual(today)
+  })
+
+  it("continues an existing streak", () => {
+    const oldStreakStart = "2023-06-01"
+    const oldStreakEnd = "2023-06-05"
+    const today = "2023-06-06"
+  
+    const { streakStart, streakEnd } = incrementWinStats({today, streakStart: oldStreakStart, streakEnd: oldStreakEnd })
+  
+    expect(streakStart).toEqual(oldStreakStart)
+    expect(streakEnd).toEqual(today)
+  })
+
+  it("increments total wins idempotently", () => { 
+    const stats = {
+      streakStart: "2023-06-01",
+      streakEnd: "2023-06-05",
+      today: "2023-06-06",
+      totalWins: 5
+    }
+
+    const newStats = incrementWinStats(stats)
+    expect(newStats.totalWins).toEqual(6)
+    expect(incrementWinStats(newStats).totalWins).toEqual(6)
   })
 })

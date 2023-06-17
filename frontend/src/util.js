@@ -82,3 +82,30 @@ export function isHintAllowed(haiku = "", censoredHaiku = []) {
     }
     return false
 }
+
+export function incrementWinStats({ today, streakStart, streakEnd, totalWins = 0 } = {}) {
+    // Prevent duplicate updates changing the totalWins twice
+    if (today === streakEnd) {
+        return { today, streakStart, streakEnd, totalWins }
+    }
+
+    const daysSinceStreakEnd = (new Date(today) - new Date(streakEnd)) / (1000*60*60*24)
+    const isNewStreak = daysSinceStreakEnd > 1 || !streakStart
+    const newStreakStart = isNewStreak
+        ? today
+        : streakStart
+        
+    const newStreakEnd = today
+
+    return {
+        today,
+        streakStart: newStreakStart,
+        streakEnd: newStreakEnd,
+        totalWins: totalWins + 1
+    }
+}
+
+// TODO - properly test and refactor with incrementWinStats
+export function subtractDays(start, end) {
+    return (new Date(end) - new Date(start)) / (1000*60*60*24)
+}

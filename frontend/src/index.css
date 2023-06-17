@@ -212,3 +212,8 @@ body {
     max-width: 128px;
   }
 }
+
+.scoreboard {
+  display: grid;
+  justify-items: center;
+}
