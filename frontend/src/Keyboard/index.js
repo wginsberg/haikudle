@@ -7,7 +7,7 @@ import { useTemporaryState } from '../hooks'
 const LETTER_ROWS = [
   'qwertyuiop'.split(''),
   'asdfghjkl'.split(''),
-  [...'zxcvbnm'.split(''), 'BACKSPACE']
+  [...'zxcvbnm'.split(''), 'backspace']
 ]
 
 export default function Keyboard ({ selectedCharacters = new Set(), addCharacter, removeCharacter }) {
@@ -16,19 +16,16 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
   // Handle events from device keyboard (desktop)
   useEffect(() => {
     const listener = (event) => {
-      const { key } = event
-      if (key === 'Backspace') {
+      const key = event.key.toLowerCase()
+      if (key === 'backspace') {
         removeCharacter()
-      } else if (key.toLowerCase().match(/^[a-z]$/)) {
+      } else if (key.match(/^[a-z]$/)) {
         if (!selectedCharacters.has(key)) {
           addCharacter(key)
         }
       }
-      const keyFormatted = key === 'Backspace'
-        ? 'BACKSPACE'
-        : key
 
-      setLastPress(keyFormatted)
+      setLastPress(key)
     }
     document.addEventListener('keydown', listener)
     const cleanup = () => document.removeEventListener('keydown', listener)
@@ -37,7 +34,7 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
 
   // Handle events from keyboard UI
   const onButtonClick = character => {
-    if (character === 'BACKSPACE') {
+    if (character === 'backspace') {
       removeCharacter()
     } else if (!selectedCharacters.has(character)) {
       addCharacter(character)

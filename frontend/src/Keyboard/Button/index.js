@@ -6,9 +6,9 @@ export default function Button (props) {
     ['keyboardButton', props.className],
     { 'keyboardButton-selected': isSelected })
 
-  if (character === 'BACKSPACE') {
+  if (character === 'backspace') {
     return (
-      <button type='reset' className={className} onClick={() => onClick('BACKSPACE')}>
+      <button type='reset' className={className} onClick={() => onClick('backspace')}>
         ⬅️
       </button>
     )
