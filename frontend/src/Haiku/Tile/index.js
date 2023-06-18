@@ -1,17 +1,17 @@
-import classnames from "classnames"
-import { GUESSED } from "../../util"
+import classnames from 'classnames'
+import { GUESSED } from '../../util'
 
-export default function Tile({ character, meta, wordIsComplete }) {
-    const className = classnames("tile", {
-        "tile-blank": character === " ",
-        "tile-censored": character === "*",
-        "tile-input": meta === GUESSED,
-        "tile-complete": wordIsComplete
-    })
+export default function Tile ({ character, meta, wordIsComplete }) {
+  const className = classnames('tile', {
+    'tile-blank': character === ' ',
+    'tile-censored': character === '*',
+    'tile-input': meta === GUESSED,
+    'tile-complete': wordIsComplete
+  })
 
-    const formattedCharacter = character === "*"
-        ? ""
-        : character
+  const formattedCharacter = character === '*'
+    ? ''
+    : character
 
-    return <span className={className}>{formattedCharacter}</span>
+  return <span className={className}>{formattedCharacter}</span>
 }

@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react'
-import Haiku from './Haiku';
-import Keyboard from './Keyboard';
+import Haiku from './Haiku'
+import Keyboard from './Keyboard'
 
-import { useDailyHaiku, useLocalStorage } from './hooks';
-import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats } from './util';
-import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants';
-import Scoreboard from './Scoreboard';
+import { useDailyHaiku, useLocalStorage } from './hooks'
+import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats } from './util'
+import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants'
+import Scoreboard from './Scoreboard'
 
-function App() {
+function App () {
   const { haikuString, date, error } = useDailyHaiku()
-  const [input, setInput] = useState("")
+  const [input, setInput] = useState('')
   const [hints, setHints] = useState(FREE_HINT_CHARS)
   const [gameState, setGameState] = useState(GAME_STATE_PLAY)
-  const [winStats, setWinStats] = useLocalStorage("stats", { today: date, totalWins: 0 })
+  const [winStats, setWinStats] = useLocalStorage('stats', { today: date, totalWins: 0 })
 
-  const haikuWithHints = addHints(haikuString.split(""), hints)
+  const haikuWithHints = addHints(haikuString.split(''), hints)
   const disableHint = !isHintAllowed(haikuString, haikuWithHints)
 
   // Check if the player won
   useEffect(() => {
     if (haikuWithHints.length === 0) return
-    
+
     const censoredHaiku = addInputToHaiku(haikuWithHints, input).characters
     if (gameState === GAME_STATE_PLAY && isSolved(censoredHaiku, haikuString)) {
       setGameState(state => state === GAME_STATE_PLAY ? GAME_STATE_WON : state)
-      
+
       setWinStats(incrementWinStats({ ...winStats, today: date }))
     }
   }, [haikuWithHints, haikuString, input, winStats, setWinStats, date, gameState])
@@ -40,11 +40,11 @@ function App() {
   const addHint = () => {
     const hintSequence = generateHintSequence(haikuString, haikuWithHints, input)
     setHints(hints => new Set([...hints, hintSequence[0]]))
-    setInput("")
+    setInput('')
   }
 
   const giveup = () => {
-    setHints(new Set("abcdefghijklmnopqrstuvwxyz"))
+    setHints(new Set('abcdefghijklmnopqrstuvwxyz'))
     setGameState(GAME_STATE_LOST)
     setWinStats({ ...winStats, today: date })
   }
@@ -56,32 +56,34 @@ function App() {
   switch (gameState) {
     case GAME_STATE_PLAY:
       return (
-        <div className="app">
+        <div className='app'>
           <Haiku
             input={input}
-            haiku={haikuString.split("")}
+            haiku={haikuString.split('')}
             haikuCensored={haikuWithHints}
           />
-          <div className="helpActions">
+          <div className='helpActions'>
             <button onClick={addHint} disabled={disableHint}>Hint</button>
             <button onClick={giveup}>Give up</button>
           </div>
           <Keyboard selectedCharacters={hints} addCharacter={addInput} removeCharacter={removeInput} />
-      </div>)
+        </div>
+      )
     case GAME_STATE_WON:
     case GAME_STATE_LOST:
       return (
-        <div className="app">
+        <div className='app'>
           <Haiku
             input={input}
-            haiku={haikuString.split("")}
+            haiku={haikuString.split('')}
             haikuCensored={haikuWithHints}
           />
-          <Scoreboard gameState={gameState} winStats={winStats}/>
-      </div>)
+          <Scoreboard gameState={gameState} winStats={winStats} />
+        </div>
+      )
     default:
       return (<p>Something went wrong :/</p>)
   }
 }
 
-export default App;
+export default App

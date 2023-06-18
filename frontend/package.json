@@ -16,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "format": "standard --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -36,5 +37,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
+  },
+  "standard": {
+    "env": [ "jest" ]
   }
 }
