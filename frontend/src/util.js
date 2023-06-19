@@ -89,7 +89,7 @@ export function incrementWinStats ({ today, streakStart, streakEnd, totalWins = 
     return { today, streakStart, streakEnd, totalWins }
   }
 
-  const daysSinceStreakEnd = (new Date(today) - new Date(streakEnd)) / (1000 * 60 * 60 * 24)
+  const daysSinceStreakEnd = subtractDays(streakEnd, today)
   const isNewStreak = daysSinceStreakEnd > 1 || !streakStart
   const newStreakStart = isNewStreak
     ? today
@@ -105,7 +105,6 @@ export function incrementWinStats ({ today, streakStart, streakEnd, totalWins = 
   }
 }
 
-// TODO - properly test and refactor with incrementWinStats
 export function subtractDays (start, end) {
   return (new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24)
 }

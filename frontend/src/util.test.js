@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, incrementWinStats, canAddInput, GIVEN, GUESSED } from './util'
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, incrementWinStats, canAddInput, subtractDays, GIVEN, GUESSED } from './util'
 
 test('addHints', () => {
   const rawHaiku = "test / haiku / ai'nt one. $"
@@ -193,6 +193,11 @@ describe('incrementWinStats', () => {
     expect(newStats.totalWins).toEqual(6)
     expect(incrementWinStats(newStats).totalWins).toEqual(6)
   })
+})
+
+test('subtractDays', () => {
+  expect(subtractDays('2000-01-01', '2000-01-02')).toEqual(1)
+  expect(subtractDays('2000-01-01', '2000-02-01')).toEqual(31)
 })
 
 describe('canAddInput', () => {
