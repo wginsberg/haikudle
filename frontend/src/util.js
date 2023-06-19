@@ -109,3 +109,8 @@ export function incrementWinStats ({ today, streakStart, streakEnd, totalWins = 
 export function subtractDays (start, end) {
   return (new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24)
 }
+
+export function canAddInput (censoredHaiku = [], input = '') {
+  const { characters } = addInputToHaiku(censoredHaiku, input)
+  return characters.includes('*')
+}

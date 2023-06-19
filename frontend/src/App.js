@@ -3,7 +3,7 @@ import Haiku from './Haiku'
 import Keyboard from './Keyboard'
 
 import { useDailyHaiku, useLocalStorage } from './hooks'
-import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats } from './util'
+import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats, canAddInput } from './util'
 import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants'
 import Scoreboard from './Scoreboard'
 
@@ -30,6 +30,7 @@ function App () {
   }, [haikuWithHints, haikuString, input, winStats, setWinStats, date, gameState])
 
   const addInput = character => {
+    if (!canAddInput(haikuWithHints, input)) return
     setInput(input => input + character)
   }
 

@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, incrementWinStats, GIVEN, GUESSED } from './util'
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, incrementWinStats, canAddInput, GIVEN, GUESSED } from './util'
 
 test('addHints', () => {
   const rawHaiku = "test / haiku / ai'nt one. $"
@@ -192,5 +192,29 @@ describe('incrementWinStats', () => {
     const newStats = incrementWinStats(stats)
     expect(newStats.totalWins).toEqual(6)
     expect(incrementWinStats(newStats).totalWins).toEqual(6)
+  })
+})
+
+describe('canAddInput', () => {
+  it('returns true when space for an input remains', () => {
+    const censoredHaiku = [
+      '*', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', 'i', 'k', '*', ' ', '/', ' ',
+      '*', 'i', '\'', 'n', '*', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const actual = canAddInput(censoredHaiku, 'thx')
+    expect(actual).toBeTruthy()
+  })
+
+  it('returns false when the no space for an input remains', () => {
+    const censoredHaiku = [
+      '*', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', 'i', 'k', '*', ' ', '/', ' ',
+      '*', 'i', '\'', 'n', '*', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const actual = canAddInput(censoredHaiku, 'thxxat')
+    expect(actual).toBeFalsy()
   })
 })
