@@ -1,5 +1,5 @@
 :root {
-  --keyboard-max-width: 580px;
+  --app-max-width: 580px;
 }
 
 html {
@@ -33,6 +33,8 @@ body {
   grid-template-rows: auto 1fr auto;
   height: 100%;
   justify-items: center;
+  max-width: var(--app-max-width);
+  margin: auto;
 }
 
 .tile {
@@ -100,12 +102,18 @@ body {
 }
 
 .line:nth-child(3) {
-  margin-bottom: -4px;
+  margin-bottom: -8px;
 }
 
 .word {
   display: flex;
-  margin: 4px 24px 4px 0px;
+  margin: 0 24px 4px 0;
+}
+
+@media (min-width: 420px) {
+  .word {
+    margin: 4px 24px 4px 4px;
+  }
 }
 
 .keyboard {
@@ -113,7 +121,7 @@ body {
   grid-template-columns: repeat(10, 1fr);
   gap: 6px;
   width: 100%;
-  max-width: 580px;
+  max-width: var(--app-max-width);
 }
 
 .keyboardRow-2 {
@@ -140,8 +148,8 @@ body {
 
   width: calc((100vw - 16px - (6px * 9))/10);
   height: calc(1.75 * (100vw - 16px - (6px * 9))/10);
-  max-width: calc((var(--keyboard-max-width) - 16px - (6px * 9))/10);
-  max-height: calc(1.25 * (var(--keyboard-max-width) - 16px - (6px * 9))/10);
+  max-width: calc((var(--app-max-width) - 16px - (6px * 9))/10);
+  max-height: calc(1.25 * (var(--app-max-width) - 16px - (6px * 9))/10);
 }
 
 .keyboardButton-selected {
@@ -195,7 +203,7 @@ body {
   justify-content: space-around;
   align-items: flex-end;
   width: 100%;
-  max-width: var(--keyboard-max-width);
+  max-width: var(--app-max-width);
   margin: 8px 0;
 }
 
