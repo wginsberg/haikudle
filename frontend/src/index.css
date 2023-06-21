@@ -22,10 +22,8 @@ body {
 }
 
 .app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   height: 100%;
 }
 
@@ -194,6 +192,7 @@ body {
 .helpActions {
   display: flex;
   justify-content: space-around;
+  align-items: flex-end;
   width: 100%;
   margin: 8px 0;
 }
