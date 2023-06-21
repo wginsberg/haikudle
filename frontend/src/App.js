@@ -16,6 +16,7 @@ function App () {
 
   const haikuWithHints = addHints(haikuString.split(''), hints)
   const disableHint = !isHintAllowed(haikuString, haikuWithHints)
+  const disableGiveup = !haikuString
 
   // Check if the player won
   useEffect(() => {
@@ -65,7 +66,7 @@ function App () {
           />
           <div className='helpActions'>
             <button onClick={addHint} disabled={disableHint}>Hint</button>
-            <button onClick={giveup}>Give up</button>
+            <button onClick={giveup} disabled={disableGiveup}>Give up</button>
           </div>
           <Keyboard selectedCharacters={hints} addCharacter={addInput} removeCharacter={removeInput} />
         </div>
