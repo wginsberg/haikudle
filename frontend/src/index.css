@@ -1,5 +1,12 @@
+:root {
+  --keyboard-max-width: 580px;
+}
+
 html {
   min-height: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;
 }
 
 body {
@@ -25,6 +32,7 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100%;
+  justify-items: center;
 }
 
 .tile {
@@ -103,7 +111,7 @@ body {
 .keyboard {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 4px;
+  gap: 6px;
   width: 100%;
   max-width: 580px;
 }
@@ -121,26 +129,19 @@ body {
 
 .keyboardButton {
   display: inline-flex;
-  aspect-ratio: 0.5;
   justify-content: center;
   align-items: center;
   background-color: lightgray;
   border: none;
   text-transform: uppercase;
-  padding:2px;
-  box-sizing: initial;
+  padding: 0;
   color: initial;
   cursor: pointer;
-}
 
-@media (min-width: 420px) {
-  .keyboardButton {
-    aspect-ratio: 1;
-  }  
-}
-
-@supports not (aspect-ratio) { 
-  height: 32px
+  width: calc((100vw - 16px - (6px * 9))/10);
+  height: calc(1.75 * (100vw - 16px - (6px * 9))/10);
+  max-width: calc((var(--keyboard-max-width) - 16px - (6px * 9))/10);
+  max-height: calc(1.25 * (var(--keyboard-max-width) - 16px - (6px * 9))/10);
 }
 
 .keyboardButton-selected {
@@ -194,6 +195,7 @@ body {
   justify-content: space-around;
   align-items: flex-end;
   width: 100%;
+  max-width: var(--keyboard-max-width);
   margin: 8px 0;
 }
 
@@ -208,9 +210,9 @@ body {
 
 @media (min-width: 420px) {
   .helpActions button {
-    height: 48px;
+    height: 32px;
     font-size: large;
-    max-width: 128px;
+    min-width: 96px;
   }
 }
 
