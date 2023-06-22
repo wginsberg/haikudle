@@ -7,20 +7,23 @@ export default function Scoreboard ({ gameState, winStats }) {
 
   if (gameState === GAME_STATE_WON) {
     return (
-      <div className='scoreboard'><p>Winner! Haiku made!</p>
+      <div className='scoreboard'>
+        <span>Winner! Haiku made!</span>
+        <br />
         {streakDays > 1
-          ? (<p>~ You are on a <strong>{streakDays}</strong> day streak ~</p>)
+          ? (<span>~ You are on a <strong>{streakDays}</strong> day streak ~</span>)
           : totalWins === 1
-            ? (<p>~ Nice job on your <strong>first</strong> haiku ~</p>)
-            : (<p>~ You have made <strong>{totalWins}</strong> haikus, total ~</p>)}
-        <p>See you tomorrow</p>
+            ? (<span>~ Nice job on your <strong>first</strong> haiku ~</span>)
+            : (<span>~ You have made <strong>{totalWins}</strong> haikus, total ~</span>)}
+        <br />
+        <span>See you tomorrow</span>
       </div>
     )
   }
 
   return (
-    <div>
-      <p>See you tomorrow</p>
+    <div className='scoreboard'>
+      <span>See you tomorrow</span>
     </div>
   )
 }

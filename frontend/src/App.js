@@ -54,7 +54,7 @@ function App () {
   const confirmGiveup = () => {
     const message = disableHint
       ? 'Are you sure you want to give up?'
-      : 'Are you sure you want to give up?\nYou still have hints available.' 
+      : 'Are you sure you want to give up?\nYou still have hints available.'
 
     window.confirm(message) && giveup()
   }
