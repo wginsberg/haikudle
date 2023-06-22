@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import classnames from 'classnames'
 
 import Button from './Button'
-import { useTemporaryState } from '../hooks'
+import { useRepeatedCall, useTemporaryState } from '../hooks'
 
 const LETTER_ROWS = [
   'qwertyuiop'.split(''),
@@ -12,6 +12,8 @@ const LETTER_ROWS = [
 
 export default function Keyboard ({ selectedCharacters = new Set(), addCharacter, removeCharacter }) {
   const [lastPress, setLastPress] = useTemporaryState('')
+
+  const setRepeatedBackspace = useRepeatedCall(removeCharacter)
 
   // Handle events from device keyboard (desktop)
   useEffect(() => {
@@ -43,6 +45,24 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
     setLastPress(character)
   }
 
+  // Handle touch hold events
+  // TODO - handle addding characters
+  const onTouchStart = character => {
+    console.log('start', character)
+    if (character === 'backspace') {
+      setRepeatedBackspace(true)
+    }
+    setLastPress(character)
+  }
+
+  // TODO - handle addding characters
+  const onTouchEnd = character => {
+    if (character === 'backspace') {
+      setRepeatedBackspace(false)
+    }
+    setLastPress(character)
+  }
+
   return (
     <div className='keyboard'>
       {LETTER_ROWS.map((letters, i) =>
@@ -58,6 +78,8 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
               character={letter}
               isSelected={isSelected}
               onClick={onButtonClick}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
               className={className}
               key={letter}
             />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function useDailyHaiku () {
   const sourceURL = process.env.NODE_ENV === 'production'
@@ -43,4 +43,35 @@ export function useLocalStorage (key = '', initialValue) {
     window.localStorage.setItem(key, JSON.stringify(newItem))
   }
   return [item, setItem]
+}
+
+export function useRepeatedCall (toCall, initialDelay = 300, intervalDelay = 100) {
+  const [isActive, setIsActive] = useState(false)
+  const timeoutRef = useRef()
+  const intervalRef = useRef()
+
+  useEffect(() => {
+    const cleanupIntervals = () => {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+
+    if (isActive) {
+      if (!timeoutRef.current) {
+        timeoutRef.current = setTimeout(() => {
+          intervalRef.current = setInterval(() => {
+            console.log('1')
+            toCall()
+          }, intervalDelay)
+        }, initialDelay)
+      }
+    } else {
+      cleanupIntervals()
+    }
+    // return cleanup
+  }, [toCall, initialDelay, intervalDelay, isActive])
+
+  return setIsActive
 }
