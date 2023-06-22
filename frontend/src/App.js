@@ -51,6 +51,14 @@ function App () {
     setWinStats({ ...winStats, today: date })
   }
 
+  const confirmGiveup = () => {
+    const message = disableHint
+      ? 'Are you sure you want to give up?'
+      : 'Are you sure you want to give up?\nYou still have hints available.' 
+
+    window.confirm(message) && giveup()
+  }
+
   if (error) {
     return (<p>Something went wrong :/</p>)
   }
@@ -66,7 +74,7 @@ function App () {
           />
           <div className='helpActions'>
             <button onClick={addHint} disabled={disableHint}>Hint</button>
-            <button onClick={giveup} disabled={disableGiveup}>Give up</button>
+            <button onClick={confirmGiveup} disabled={disableGiveup}>Give up</button>
           </div>
           <Keyboard selectedCharacters={hints} addCharacter={addInput} removeCharacter={removeInput} />
         </div>
