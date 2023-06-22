@@ -112,7 +112,7 @@ body {
 
 @media (min-width: 420px) {
   .word {
-    margin: 4px 24px 4px 4px;
+    margin-top: 4px;
   }
 }
 
