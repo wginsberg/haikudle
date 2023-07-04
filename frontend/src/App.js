@@ -40,7 +40,7 @@ function App () {
   }
 
   const addHint = () => {
-    const hintSequence = generateHintSequence(haikuString, haikuWithHints, input)
+    const hintSequence = generateHintSequence(haikuString.split(), haikuWithHints, input)
     setHints(hints => new Set([...hints, hintSequence[0]]))
     setInput('')
   }

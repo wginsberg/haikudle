@@ -50,16 +50,27 @@ export function addInputToHaiku (haiku = [], input = '') {
 * Each character returned will fill in a previously un-guessed or incorrectly guessed tile
 */
 export function generateHintSequence (haiku = [], censoredHaiku = [], input = '') {
-  const haikuWithInput = addInputToHaiku(censoredHaiku, input).characters
-  const missingChars = new Set()
-  for (let i = 0; i < haiku.length; i++) {
-    if (!haikuWithInput[i].match(/[*a-z]/)) continue
-    if (haikuWithInput[i] !== haiku[i]) {
-      missingChars.add(haiku[i])
+  const haikuWords = haiku.join('').split(' ')
+  const haikuWithInputString = addInputToHaiku(censoredHaiku, input).characters.join('').split(' ')
+
+  let index = 0
+  for (let i = 0; i < haikuWords.length; i++) {
+    const word = haikuWords[i]
+    if (word !== haikuWithInputString[i]) {
+      const missingChars = new Set()
+      for (let j = 0; j < word.length; j++) {
+        const char = haikuWords[i][j]
+        // console.log({ char, _: censoredHaiku[index + j] })
+        if (censoredHaiku[index + j] !== char) {
+          missingChars.add(char)
+        }
+      }
+      return [...missingChars].sort().join('')
     }
+    index += word.length + 1
   }
 
-  return [...missingChars].sort().join('')
+  return ''
 }
 
 export function isSolved (censoredHaiku = [], haiku = '') {

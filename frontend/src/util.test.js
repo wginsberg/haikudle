@@ -59,25 +59,63 @@ test('addInput', () => {
   expect(actual.meta).toEqual(expectedCharacterMeta)
 })
 
-test('generateHintSequence', () => {
-  const haiku = [
-    't', 'e', 's', 't', ' ', '/', ' ',
-    'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
-    'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
-  ]
+describe('generateHintSequence', () => {
+  it('works with no input', () => {
+    const haiku = [
+      't', 'e', 's', 't'
+    ]
 
-  const censoredHaiku = [
-    't', 'e', 's', 't', ' ', '/', ' ',
-    '*', '*', '*', '*', '*', ' ', '/', ' ',
-    '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
-  ]
+    const censoredHaiku = [
+      't', '*', 's', 't'
+    ]
 
-  const input = 'boioka'
+    const actual = generateHintSequence(haiku, censoredHaiku)
+    const expected = 'e'
 
-  const actual = generateHintSequence(haiku, censoredHaiku, input)
-  const expected = 'ahikou'
+    expect(actual).toEqual(expected)
+  })
 
-  expect(actual).toEqual(expected)
+  it('works with correctly input words', () => {
+    const haiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
+      'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const censoredHaiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', '*', '*', '*', ' ', '/', ' ',
+      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const input = 'haikuas'
+
+    const actual = generateHintSequence(haiku, censoredHaiku, input)
+    const expected = 'ai'
+
+    expect(actual).toEqual(expected)
+  })
+
+  it('works with incorrectly input words', () => {
+    const haiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
+      'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const censoredHaiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', '*', '*', '*', ' ', '/', ' ',
+      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const input = 'xxxxxai'
+
+    const actual = generateHintSequence(haiku, censoredHaiku, input)
+    const expected = 'ahiku' // "haiku" in alphabetical order
+
+    expect(actual).toEqual(expected)
+  })
 })
 
 describe('isSolved', () => {
