@@ -147,9 +147,9 @@ body {
 
 .keyboardButtonContainerBackspace {
   display: flex;
-  min-width: 150%;
+  min-width: 200%;
   justify-self: right;
-  padding-right: 50%;
+  padding-right: 100%;
   background: none;
 }
 
