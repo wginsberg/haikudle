@@ -79,7 +79,7 @@ function App () {
             <button
               onClick={addHint}
               disabled={disableHint}
-              className={classnames({ shake: !isPlayerProgressing })}
+              className={classnames({ shake: !isPlayerProgressing && !disableHint })}
             >
               Hint
             </button>

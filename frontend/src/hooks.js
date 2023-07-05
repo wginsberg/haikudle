@@ -76,7 +76,7 @@ export function useRepeatedCall (toCall, initialDelay = 300, intervalDelay = 100
   return setIsActive
 }
 
-export function useIsPlayerMakingProgess (censoredHaiku, haiku, hints, interval = 15000) {
+export function useIsPlayerMakingProgess (censoredHaiku, haiku, hints, interval = 7500) {
   const intervalRef = useRef()
   const [isProgressing, setIsProgressing] = useState(true)
   const lastHintsRef = useRef()
