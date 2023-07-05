@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, numWordsSolved, isHintAllowed, incrementWinStats, canAddInput, subtractDays, GIVEN, GUESSED } from './util'
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, numWordsSolved, isHintAllowed, incrementWinStats, canAddInput, subtractDays, getRandomHint, GIVEN, GUESSED } from './util'
 
 test('addHints', () => {
   const rawHaiku = "test / haiku / ai'nt one. $"
@@ -75,7 +75,7 @@ describe('generateHintSequence', () => {
     expect(actual).toEqual(expected)
   })
 
-  it('works with correctly input words', () => {
+  it('provides letters of the next un-guessed word when input exists and is correct', () => {
     const haiku = [
       't', 'e', 's', 't', ' ', '/', ' ',
       'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
@@ -96,7 +96,7 @@ describe('generateHintSequence', () => {
     expect(actual).toEqual(expected)
   })
 
-  it('works with incorrectly input words', () => {
+  it('provides letters of the next un-guessed word when input exists and is incorrect', () => {
     const haiku = [
       't', 'e', 's', 't', ' ', '/', ' ',
       'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
@@ -113,6 +113,27 @@ describe('generateHintSequence', () => {
 
     const actual = generateHintSequence(haiku, censoredHaiku, input)
     const expected = 'ahiku' // "haiku" in alphabetical order
+
+    expect(actual).toEqual(expected)
+  })
+
+  it('provides letters from the entire haiku when no input is provided', () => {
+    const haiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
+      'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const censoredHaiku = [
+      't', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', '*', '*', '*', ' ', '/', ' ',
+      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+    ]
+
+    const input = ''
+
+    const actual = generateHintSequence(haiku, censoredHaiku, input)
+    const expected = 'ahikou'
 
     expect(actual).toEqual(expected)
   })
@@ -289,5 +310,16 @@ test('numWordsSolved returns the number of words solved', () => {
     const expected = 3 // "test", "ai'nt", "one"
 
     expect(actual).toEqual(expected)
+  }
+})
+
+test('getRandomHint', () => {
+  {
+    const actual = getRandomHint('a')
+    expect(actual).toEqual('a')
+  }
+  {
+    const actual = getRandomHint('xyz')
+    expect(actual).toMatch(/[xyz]/)
   }
 })

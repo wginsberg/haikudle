@@ -4,7 +4,7 @@ import Haiku from './Haiku'
 import Keyboard from './Keyboard'
 
 import { useDailyHaiku, useLocalStorage, useIsPlayerMakingProgess } from './hooks'
-import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats, canAddInput } from './util'
+import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats, canAddInput, getRandomHint } from './util'
 import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants'
 import Scoreboard from './Scoreboard'
 
@@ -44,7 +44,8 @@ function App () {
 
   const addHint = () => {
     const hintSequence = generateHintSequence(haikuString.split(), haikuWithHints, input)
-    setHints(hints => new Set([...hints, hintSequence[0]]))
+    const newHint = getRandomHint(hintSequence)
+    setHints(hints => new Set([...hints, newHint]))
     setInput('')
   }
 

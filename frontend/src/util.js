@@ -53,6 +53,22 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
   const haikuWords = haiku.join('').split(' ')
   const haikuWithInputString = addInputToHaiku(censoredHaiku, input).characters.join('').split(' ')
 
+  // When no input is provided we give hints from the entire haiku
+  if (!input) {
+    const missingChars = new Set()
+    for (const i in haikuWords) {
+      for (const j in haikuWords[i]) {
+        if (!haikuWithInputString[i][j].match(/[*a-z]/)) continue
+        if (haikuWithInputString[i][j] !== haikuWords[i][j]) {
+          missingChars.add(haikuWords[i][j])
+        }
+      }
+    }
+
+    return [...missingChars].sort().join('')
+  }
+
+  // Otherwise we give hints from the next un-guessed word
   let index = 0
   for (let i = 0; i < haikuWords.length; i++) {
     const word = haikuWords[i]
@@ -60,7 +76,6 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
       const missingChars = new Set()
       for (let j = 0; j < word.length; j++) {
         const char = haikuWords[i][j]
-        // console.log({ char, _: censoredHaiku[index + j] })
         if (censoredHaiku[index + j] !== char) {
           missingChars.add(char)
         }
@@ -139,4 +154,9 @@ export function subtractDays (start, end) {
 export function canAddInput (censoredHaiku = [], input = '') {
   const { characters } = addInputToHaiku(censoredHaiku, input)
   return characters.includes('*')
+}
+
+export function getRandomHint (hintSequence = '') {
+  const index = Math.floor(Math.random() * hintSequence.length)
+  return hintSequence[index]
 }
