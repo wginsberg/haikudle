@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import classnames from 'classnames'
 
 import Button from './Button'
 import { useRepeatedCall, useTemporaryState } from '../hooks'
@@ -68,11 +67,6 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
       {LETTER_ROWS.map((letters, i) =>
         letters.map(letter => {
           const isSelected = selectedCharacters.has(letter)
-          const className = classnames(
-            'keyboardRow',
-            `keyboardRow-${i + 1}`,
-            { 'keyboardButton-pressed': letter === lastPress }
-          )
           return (
             <Button
               character={letter}
@@ -80,7 +74,8 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
               onClick={onButtonClick}
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
-              className={className}
+              row={i + 1}
+              isPressed={letter === lastPress}
               key={letter}
             />
           )

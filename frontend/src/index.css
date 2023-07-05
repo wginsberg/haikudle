@@ -136,51 +136,65 @@ body {
 }
 
 
-.keyboardButton {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  background-color: lightgray;
+.keyboardButtonContainer {
   border: none;
-  text-transform: uppercase;
   padding: 0;
-  color: initial;
-  cursor: pointer;
-
   width: calc((100vw - 16px - (6px * 9))/10);
   height: calc(1.75 * (100vw - 16px - (6px * 9))/10);
   max-width: calc((var(--app-max-width) - 16px - (6px * 9))/10);
   max-height: calc(1.25 * (var(--app-max-width) - 16px - (6px * 9))/10);
 }
 
-.keyboardButton-selected {
+.keyboardButtonContainerBackspace {
+  display: flex;
+  min-width: 150%;
+  justify-self: right;
+  padding-right: 50%;
+  background: none;
+}
+
+.keyboardButtonContent {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  color: initial;
+  cursor: pointer;
+  text-transform: uppercase;
+  height: 100%;
+  width: 100%;
+}
+
+.keyboardButtonContent-selected {
   background-color: greenyellow;
   cursor: initial;
 }
 
-.keyboardButton[type="submit"] {
-  font-weight: bold;
-}
-
-.keyboardButton-pressed {
+.keyboardButtonContent-pressed {
   animation: keyflash 0.2s both;
 }
 
-.keyboardButton-pressed.keyboardButton-selected {
+.keyboardButtonContent-pressed.keyboardButtonContent-selected {
   animation: keyflash-disabled 0.2s both;
 }
 
 @keyframes keyflash {
   0% {
     border: 2px solid white;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
   }
 
   50% {
     border: 4px solid black;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
   }
 
   100% {
     border: 2px solid white;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
   }
 }
 
@@ -188,14 +202,20 @@ body {
 @keyframes keyflash-disabled {
   0% {
     border: 2px solid white;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
   }
 
   50% {
     border: 4px solid firebrick;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
   }
 
   100% {
     border: 2px solid white;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
   }
 }
 

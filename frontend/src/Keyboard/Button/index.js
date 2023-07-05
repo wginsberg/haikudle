@@ -1,31 +1,40 @@
 import classnames from 'classnames'
 
 export default function Button (props) {
-  const { character, isSelected, onClick, onTouchStart, onTouchEnd } = props
-  const className = classnames(
-    ['keyboardButton', props.className],
-    { 'keyboardButton-selected': isSelected })
+  const { character, isSelected, onClick, onTouchStart, onTouchEnd, row, isPressed } = props
+
+  const containerClassName = classnames(
+    [
+      'keyboardRow',
+      `keyboardRow-${row}`,
+      'keyboardButtonContainer'
+    ])
+
+  const contentClassName = classnames('keyboardButtonContent', {
+    'keyboardButtonContent-selected': isSelected,
+    'keyboardButtonContent-pressed': isPressed
+  })
 
   if (character === 'backspace') {
     return (
       <button
         type='reset'
-        className={className}
+        className={classnames(containerClassName, 'keyboardButtonContainerBackspace')}
         onClick={() => onClick('backspace')}
         onTouchStart={() => onTouchStart('backspace')}
         onTouchEnd={() => onTouchEnd('backspace')}
         onTouchCancel={() => onTouchEnd('backspace')}
       >
-        ⬅️
+        <div className={contentClassName}>⬅️</div>
       </button>
     )
   }
   return (
     <button
-      className={className}
+      className={containerClassName}
       onClick={() => onClick(character)}
     >
-      {character}
+      <div className={contentClassName}>{character}</div>
     </button>
   )
 }
