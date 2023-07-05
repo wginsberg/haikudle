@@ -82,6 +82,22 @@ export function isSolved (censoredHaiku = [], haiku = '') {
   return true
 }
 
+export function numWordsSolved (censoredHaiku = [], haiku = '') {
+  const haikuLines = charactersTo2DStringArray(haiku.split(''))
+  const censoredLines = charactersTo2DStringArray(censoredHaiku)
+  let count = 0
+  for (const i in haikuLines) {
+    for (const j in haikuLines[i]) {
+      const word = haikuLines[i][j]
+      if (censoredLines[i][j] === word) {
+        count += 1
+      }
+    }
+  }
+
+  return count
+}
+
 export function isHintAllowed (haiku = '', censoredHaiku = []) {
   const remaining = new Set()
 

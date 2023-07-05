@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { numWordsSolved } from './util'
 
 export function useDailyHaiku () {
   const sourceURL = process.env.NODE_ENV === 'production'
@@ -70,8 +71,42 @@ export function useRepeatedCall (toCall, initialDelay = 300, intervalDelay = 100
     } else {
       cleanupIntervals()
     }
-    // return cleanup
   }, [toCall, initialDelay, intervalDelay, isActive])
 
   return setIsActive
+}
+
+export function useIsPlayerMakingProgess (censoredHaiku, haiku, hints, interval = 15000) {
+  const intervalRef = useRef()
+  const [isProgressing, setIsProgressing] = useState(true)
+  const lastHintsRef = useRef()
+  const hintsRef = useRef()
+  const lastNumWordsSolvedRef = useRef()
+  const numWordsSolvedRef = useRef()
+
+  // need to write this every time to access in closure of setTimeout
+  hintsRef.current = new Set(hints)
+  numWordsSolvedRef.current = numWordsSolved(censoredHaiku, haiku)
+
+  useEffect(() => {
+    if (!intervalRef.current) {
+      lastHintsRef.current = new Set(hints)
+      lastNumWordsSolvedRef.current = numWordsSolved(censoredHaiku, haiku)
+
+      intervalRef.current = setInterval(() => {
+        const areHintsEqual = [...lastHintsRef.current].join() === [...hintsRef.current].join()
+        const isNumWordsSolvedEqual = numWordsSolvedRef.current === lastNumWordsSolvedRef.current
+
+        if (areHintsEqual && isNumWordsSolvedEqual) {
+          setIsProgressing(false)
+          clearInterval(intervalRef.current)
+        } else {
+          lastHintsRef.current = hintsRef.current
+          lastNumWordsSolvedRef.current = numWordsSolvedRef.current
+        }
+      }, interval)
+    }
+  }, [censoredHaiku, haiku, hints, interval])
+
+  return isProgressing
 }

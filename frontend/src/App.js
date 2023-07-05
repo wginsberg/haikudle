@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+import classnames from 'classnames'
 import Haiku from './Haiku'
 import Keyboard from './Keyboard'
 
-import { useDailyHaiku, useLocalStorage } from './hooks'
+import { useDailyHaiku, useLocalStorage, useIsPlayerMakingProgess } from './hooks'
 import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats, canAddInput } from './util'
 import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants'
 import Scoreboard from './Scoreboard'
@@ -15,20 +16,22 @@ function App () {
   const [winStats, setWinStats] = useLocalStorage('stats', { today: date, totalWins: 0 })
 
   const haikuWithHints = addHints(haikuString.split(''), hints)
+  const censoredHaiku = addInputToHaiku(haikuWithHints, input).characters
   const disableHint = !isHintAllowed(haikuString, haikuWithHints)
   const disableGiveup = !haikuString
+
+  const isPlayerProgressing = useIsPlayerMakingProgess(censoredHaiku, haikuString, hints)
 
   // Check if the player won
   useEffect(() => {
     if (haikuWithHints.length === 0) return
 
-    const censoredHaiku = addInputToHaiku(haikuWithHints, input).characters
     if (gameState === GAME_STATE_PLAY && isSolved(censoredHaiku, haikuString)) {
       setGameState(state => state === GAME_STATE_PLAY ? GAME_STATE_WON : state)
 
       setWinStats(incrementWinStats({ ...winStats, today: date }))
     }
-  }, [haikuWithHints, haikuString, input, winStats, setWinStats, date, gameState])
+  }, [haikuWithHints, censoredHaiku, haikuString, input, winStats, setWinStats, date, gameState])
 
   const addInput = character => {
     if (!canAddInput(haikuWithHints, input)) return
@@ -73,7 +76,13 @@ function App () {
             haikuCensored={haikuWithHints}
           />
           <div className='helpActions'>
-            <button onClick={addHint} disabled={disableHint}>Hint</button>
+            <button
+              onClick={addHint}
+              disabled={disableHint}
+              className={classnames({ shake: !isPlayerProgressing })}
+            >
+              Hint
+            </button>
             <button onClick={confirmGiveup} disabled={disableGiveup}>Give up</button>
           </div>
           <Keyboard selectedCharacters={hints} addCharacter={addInput} removeCharacter={removeInput} />
