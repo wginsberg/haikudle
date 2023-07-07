@@ -1,4 +1,4 @@
-# Haikudle - [play me!](https://wginsberg.github.io/haikudle)
+# Haikudle - [play me!](https://haikudle.pages.dev)
 
 This is a daily puzzle game inspired by [wordle](https://www.nytimes.com/games/wordle/index.html).
 
