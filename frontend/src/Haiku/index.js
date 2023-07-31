@@ -14,6 +14,7 @@ export default function Haiku ({ haiku, haikuCensored, input }) {
         <div className='line' key={i}>
           {line.map((word, j) => {
             const isComplete = word === wordArray2d[i][j]
+            const wordIsIncorrect = !isComplete && !word.includes('*')
             return (
               <span className='word' key={j}>
                 {word
@@ -21,6 +22,7 @@ export default function Haiku ({ haiku, haikuCensored, input }) {
                   .map((character, k) => (
                     <Tile
                       character={character}
+                      wordIsIncorrect={wordIsIncorrect}
                       wordIsComplete={isComplete}
                       meta={metaArray2d[i][j][k]}
                       key={`${i}-${j}-${k}`}

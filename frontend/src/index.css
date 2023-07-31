@@ -85,7 +85,7 @@ body {
 }
 
 .tile-input {
-  background-color: lightcoral;
+  background-color: wheat;
   animation: none;
 }
 
@@ -94,6 +94,10 @@ body {
   border-color: black;
   border-radius: 4px;
   animation: 1s ease-in flip;
+}
+
+.tile-incorrect {
+  background-color: lightcoral;
 }
 
 .line {
