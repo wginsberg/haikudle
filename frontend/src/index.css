@@ -112,6 +112,7 @@ body {
 
 .word {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 24px 4px 0;
 }
 
