@@ -1,26 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { numWordsSolved } from './util'
 
-export function useDailyHaiku () {
-  const sourceURL = process.env.NODE_ENV === 'production'
-    ? 'https://raw.githubusercontent.com/wginsberg/haikudl/master/daily.txt'
-    : 'daily.txt'
-
-  const [result, setResult] = useState('')
-  const [error, setError] = useState()
-
-  useEffect(() => {
-    fetch(sourceURL)
-      .then(response => response.text())
-      .then(setResult)
-      .catch(setError)
-  }, [sourceURL])
-
-  const [haikuString, date] = result.split('\n')
-
-  return { haikuString, date, error }
-}
-
 export function useTemporaryState (initalState, timeout = 100) {
   const [state, setState] = useState(initalState)
 

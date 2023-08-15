@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import Haiku from './Haiku'
 import Keyboard from './Keyboard'
-
-import { useDailyHaiku, useLocalStorage, useIsPlayerMakingProgess } from './hooks'
+import { useLocalStorage, useIsPlayerMakingProgess } from './hooks'
 import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats, canAddInput, getRandomHint } from './util'
 import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants'
 import Scoreboard from './Scoreboard'
+import dailyHaiku from './daily.json'
 
 function App () {
-  const { haikuString, date, error } = useDailyHaiku()
+  const { haiku: haikuString, date } = dailyHaiku
+
   const [input, setInput] = useState('')
   const [hints, setHints] = useState(FREE_HINT_CHARS)
   const [gameState, setGameState] = useState(GAME_STATE_PLAY)
@@ -61,10 +62,6 @@ function App () {
       : 'Are you sure you want to give up?\nYou still have hints available.'
 
     window.confirm(message) && giveup()
-  }
-
-  if (error) {
-    return (<p>Something went wrong :/</p>)
   }
 
   switch (gameState) {

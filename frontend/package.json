@@ -1,7 +1,6 @@
 {
-  "name": "haikudl",
+  "name": "haikudle",
   "version": "0.1.0",
-  "homepage" : ".",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -16,6 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "react-snap",
     "format": "standard --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "react-snap": "^1.23.0",
     "standard": "^17.1.0"
   },
   "standard": {

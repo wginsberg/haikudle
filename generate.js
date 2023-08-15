@@ -17,6 +17,13 @@ try {
 }
 
 const lines = data.toString().split('\n')
-const line = lines[todayIndex]
+const haiku = lines[todayIndex]
 
-console.log(line)
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const day = String(today.getDate()).padStart(2, '0');
+const date = `${year}-${month}-${day}`;
+
+const json = JSON.stringify({ haiku, date })
+
+console.log(json)
