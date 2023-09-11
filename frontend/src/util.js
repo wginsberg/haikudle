@@ -119,7 +119,7 @@ export function isHintAllowed (haiku = '', censoredHaiku = []) {
   for (let i = 0; i < censoredHaiku.length; i++) {
     if (censoredHaiku[i] === '*') {
       remaining.add(haiku[i])
-      if (remaining.size > 4) return true
+      if (remaining.size > 5) return true
     }
   }
   return false

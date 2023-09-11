@@ -182,9 +182,9 @@ describe('isSolved', () => {
 describe('isHintAlowed', () => {
   const haiku = "test / haiku / ai'nt one. $"
 
-  it('provides a hint when more than 2 distinct characters are remaining', () => {
+  it('provides a hint when more than 5 distinct characters are remaining', () => {
     const censoredHaiku = [
-      '*', 'e', 's', 't', ' ', '/', ' ',
+      '*', '*', '*', 't', ' ', '/', ' ',
       '*', 'a', 'i', 'k', 'u', ' ', '/', ' ',
       '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
     ]
@@ -193,11 +193,11 @@ describe('isHintAlowed', () => {
     expect(actual).toEqual(true)
   })
 
-  it('does not provide a hint when only 4 distinct characters are remaining', () => {
+  it('does not provide a hint when 5 distinct characters are remaining', () => {
     const censoredHaiku = [
       '*', 'e', 's', 't', ' ', '/', ' ',
-      '*', '*', 'i', 'k', '*', ' ', '/', ' ',
-      '*', 'i', '\'', 'n', '*', ' ', 'o', 'n', 'e', '.', ' ', '$'
+      '*', 'a', 'i', 'k', 'u', ' ', '/', ' ',
+      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
     ]
 
     const actual = isHintAllowed(haiku, censoredHaiku)
