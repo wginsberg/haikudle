@@ -53,11 +53,13 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
   const haikuWords = haiku.join('').split(' ')
   const haikuWithInputString = addInputToHaiku(censoredHaiku, input).characters.join('').split(' ')
 
-  // When no input is provided we give hints from the entire haiku
+  // When no input is provided we give hints from the first line of the haiku
   if (!input) {
     const missingChars = new Set()
     for (const i in haikuWords) {
-      for (const j in haikuWords[i]) {
+      const word = haikuWords[i]
+      if (word === '/') break
+      for (const j in word) {
         if (!haikuWithInputString[i][j].match(/[*a-z]/)) continue
         if (haikuWithInputString[i][j] !== haikuWords[i][j]) {
           missingChars.add(haikuWords[i][j])

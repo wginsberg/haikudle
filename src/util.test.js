@@ -117,7 +117,7 @@ describe('generateHintSequence', () => {
     expect(actual).toEqual(expected)
   })
 
-  it('provides letters from the entire haiku when no input is provided', () => {
+  it('provides letters from the first line when no input is provided', () => {
     const haiku = [
       't', 'e', 's', 't', ' ', '/', ' ',
       'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
@@ -125,7 +125,7 @@ describe('generateHintSequence', () => {
     ]
 
     const censoredHaiku = [
-      't', 'e', 's', 't', ' ', '/', ' ',
+      't', '*', '*', 't', ' ', '/', ' ',
       '*', '*', '*', '*', '*', ' ', '/', ' ',
       '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
     ]
@@ -133,7 +133,7 @@ describe('generateHintSequence', () => {
     const input = ''
 
     const actual = generateHintSequence(haiku, censoredHaiku, input)
-    const expected = 'ahikou'
+    const expected = 'es'
 
     expect(actual).toEqual(expected)
   })
