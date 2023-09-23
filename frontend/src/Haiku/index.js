@@ -21,21 +21,23 @@ export default function Haiku ({ haiku, haikuCensored, input }) {
           <div className={className} key={i}>
             {line.map((word, j) => {
               const isComplete = word === wordArray2d[i][j]
-              const wordIsIncorrect = !isComplete && !word.includes('*')
-              const displayIncorrectWord = wordIsIncorrect && i < activeLine
+
               return (
                 <span className='word' key={j}>
                   {word
                     .split('')
-                    .map((character, k) => (
-                      <Tile
-                        character={character}
-                        wordIsIncorrect={displayIncorrectWord}
-                        wordIsComplete={isComplete}
-                        meta={metaArray2d[i][j][k]}
-                        key={`${i}-${j}-${k}`}
-                      />
-                    ))}
+                    .map((character, k) => {
+                      const isTileCorrect = activeLine > i && character === wordArray2d[i][j][k]
+                      return (
+                        <Tile
+                          character={character}
+                          tileIsCorrect={isTileCorrect}
+                          wordIsComplete={isComplete}
+                          meta={metaArray2d[i][j][k]}
+                          key={`${i}-${j}-${k}`}
+                        />
+                      )
+                    })}
                 </span>
               )
             })}
