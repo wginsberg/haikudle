@@ -10,7 +10,7 @@ export default function Haiku ({ haiku, haikuCensored, input }) {
   const metaArray2d = charactersTo2DStringArray(meta)
 
   const currentLine = metaArray2d.findIndex(line => line.find(word => word.includes('*')))
-  const activeLine = currentLine === -1 ? 2 : currentLine
+  const activeLine = currentLine === -1 ? 3 : currentLine
 
   return (
     <div className='haiku'>
