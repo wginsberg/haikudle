@@ -110,6 +110,10 @@ body {
   margin-bottom: -8px;
 }
 
+.line-inactive {
+  opacity: 0.5;
+}
+
 .word {
   display: flex;
   flex-wrap: wrap;
