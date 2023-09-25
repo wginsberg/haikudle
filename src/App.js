@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import Haiku from './Haiku'
 import Keyboard from './Keyboard'
-import { useLocalStorage, useIsPlayerMakingProgess } from './hooks'
+import { useLocalStorage, useHintButtonShake } from './hooks'
 import { addHints, generateHintSequence, isSolved, FREE_HINT_CHARS, addInputToHaiku, isHintAllowed, incrementWinStats, canAddInput, getRandomHint } from './util'
 import { GAME_STATE_LOST, GAME_STATE_PLAY, GAME_STATE_WON } from './constants'
 import Scoreboard from './Scoreboard'
@@ -21,7 +21,7 @@ function App () {
   const disableHint = !isHintAllowed(haikuString, haikuWithHints)
   const disableGiveup = !haikuString
 
-  const isPlayerProgressing = useIsPlayerMakingProgess(censoredHaiku, haikuString, hints)
+  const shakeHintButton = useHintButtonShake(censoredHaiku)
 
   // Check if the player won
   useEffect(() => {
@@ -77,7 +77,7 @@ function App () {
             <button
               onClick={addHint}
               disabled={disableHint}
-              className={classnames({ shake: !isPlayerProgressing && !disableHint })}
+              className={classnames({ shake: shakeHintButton && !disableHint })}
             >
               Hint
             </button>

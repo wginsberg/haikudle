@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { numWordsSolved } from './util'
 
 export function useTemporaryState (initalState, timeout = 100) {
@@ -56,37 +56,29 @@ export function useRepeatedCall (toCall, initialDelay = 300, intervalDelay = 100
   return setIsActive
 }
 
-export function useIsPlayerMakingProgess (censoredHaiku, haiku, hints, interval = 7500) {
-  const intervalRef = useRef()
-  const [isProgressing, setIsProgressing] = useState(true)
-  const lastHintsRef = useRef()
-  const hintsRef = useRef()
-  const lastNumWordsSolvedRef = useRef()
-  const numWordsSolvedRef = useRef()
+export function useHintButtonShake (censoredHaiku, timeout = 10000, maxShakes = 2) {
+  const timeoutRef = useRef()
+  const [shouldShake, setShouldShake] = useTemporaryState(false, 5000)
+  const [shakeCount, setShakeCount] = useState(0)
 
-  // need to write this every time to access in closure of setTimeout
-  hintsRef.current = new Set(hints)
-  numWordsSolvedRef.current = numWordsSolved(censoredHaiku, haiku)
+  const shake = useCallback(() => {
+    if (shakeCount > maxShakes) return
+    setShouldShake(true)
+    setShakeCount(count => count + 1)
+  }, [shakeCount, maxShakes, setShouldShake])
 
+  // Shake once after initial timeout
   useEffect(() => {
-    if (!intervalRef.current) {
-      lastHintsRef.current = new Set(hints)
-      lastNumWordsSolvedRef.current = numWordsSolved(censoredHaiku, haiku)
-
-      intervalRef.current = setInterval(() => {
-        const areHintsEqual = [...lastHintsRef.current].join() === [...hintsRef.current].join()
-        const isNumWordsSolvedEqual = numWordsSolvedRef.current === lastNumWordsSolvedRef.current
-
-        if (areHintsEqual && isNumWordsSolvedEqual) {
-          setIsProgressing(false)
-          clearInterval(intervalRef.current)
-        } else {
-          lastHintsRef.current = hintsRef.current
-          lastNumWordsSolvedRef.current = numWordsSolvedRef.current
-        }
-      }, interval)
+    if (!timeoutRef.current) {
+      timeoutRef.current = setTimeout(shake, timeout)
     }
-  }, [censoredHaiku, haiku, hints, interval])
+  }, [shake, timeout])
 
-  return isProgressing
+  // Shake if the player reached the end without winning
+  const noGuessesLeft = !censoredHaiku.includes('*')
+  if (noGuessesLeft && shouldShake === false) {
+    shake()
+  }
+
+  return shouldShake
 }
