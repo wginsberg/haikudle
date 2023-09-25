@@ -75,7 +75,7 @@ describe('generateHintSequence', () => {
     expect(actual).toEqual(expected)
   })
 
-  it('provides letters of the next un-guessed word when input exists and is correct', () => {
+  it('provides letters of the next word when input exists and is correct', () => {
     const haiku = [
       't', 'e', 's', 't', ' ', '/', ' ',
       'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
@@ -91,12 +91,12 @@ describe('generateHintSequence', () => {
     const input = 'haikuas'
 
     const actual = generateHintSequence(haiku, censoredHaiku, input)
-    const expected = 'ai'
+    const expected = 'i'
 
     expect(actual).toEqual(expected)
   })
 
-  it('provides letters of the next un-guessed word when input exists and is incorrect', () => {
+  it('provides letters of the next word when input exists and is incorrect', () => {
     const haiku = [
       't', 'e', 's', 't', ' ', '/', ' ',
       'h', 'a', 'i', 'k', 'u', ' ', '/', ' ',
@@ -106,13 +106,13 @@ describe('generateHintSequence', () => {
     const censoredHaiku = [
       't', 'e', 's', 't', ' ', '/', ' ',
       '*', '*', '*', '*', '*', ' ', '/', ' ',
-      '*', '*', '\'', 'n', 't', ' ', '*', 'n', 'e', '.', ' ', '$'
+      '*', '*', '\'', 'n', 't', ' ', '*', '*', 'e', '.', ' ', '$'
     ]
 
     const input = 'xxxxxai'
 
     const actual = generateHintSequence(haiku, censoredHaiku, input)
-    const expected = 'ahiku' // "haiku" in alphabetical order
+    const expected = 'no'
 
     expect(actual).toEqual(expected)
   })

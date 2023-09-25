@@ -70,21 +70,26 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
     return [...missingChars].sort().join('')
   }
 
-  // Otherwise we give hints from the next un-guessed word
-  let index = 0
-  for (let i = 0; i < haikuWords.length; i++) {
-    const word = haikuWords[i]
-    if (word !== haikuWithInputString[i]) {
+  // Otherwise we give hints from the next word
+
+  for (let i = 1; i < haikuWithInputString.length; i++) {
+    if (haikuWithInputString[i].includes('*')) {
+      const prevWordGuessed = haikuWithInputString[i - 1]
+      const prevWord = haikuWords[i - 1]
+      const prevWordIsCorrect = prevWord === prevWordGuessed
+
+      const hintIndex = prevWordIsCorrect ? i : i - 1
+      const hintWord = haikuWords[hintIndex]
+      const hintWordGuess = haikuWithInputString[hintIndex]
+
       const missingChars = new Set()
-      for (let j = 0; j < word.length; j++) {
-        const char = haikuWords[i][j]
-        if (censoredHaiku[index + j] !== char) {
-          missingChars.add(char)
+      for (const j in hintWord) {
+        if (hintWord[j] !== hintWordGuess[j]) {
+          missingChars.add(hintWord[j])
         }
       }
       return [...missingChars].sort().join('')
     }
-    index += word.length + 1
   }
 
   return ''
