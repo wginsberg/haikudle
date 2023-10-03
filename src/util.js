@@ -53,6 +53,8 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
   const haikuWords = haiku.join('').split(' ')
   const haikuWithInputString = addInputToHaiku(censoredHaiku, input).characters.join('').split(' ')
 
+  let firstLineHintSequence
+
   // When no input is provided we give hints from the first line of the haiku
   if (!input) {
     const missingChars = new Set()
@@ -67,10 +69,14 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
       }
     }
 
-    return [...missingChars].sort().join('')
+    firstLineHintSequence = [...missingChars].sort().join('')
   }
 
+  if (firstLineHintSequence) return firstLineHintSequence
+
   // Otherwise we give hints from the next word
+
+  let nextWordHintSequence
 
   for (let i = 1; i < haikuWithInputString.length; i++) {
     if (haikuWithInputString[i].includes('*')) {
@@ -88,7 +94,8 @@ export function generateHintSequence (haiku = [], censoredHaiku = [], input = ''
           missingChars.add(hintWord[j])
         }
       }
-      return [...missingChars].sort().join('')
+      nextWordHintSequence = [...missingChars].sort().join('')
+      if (nextWordHintSequence) return nextWordHintSequence
     }
   }
 
