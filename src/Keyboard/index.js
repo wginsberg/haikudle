@@ -21,9 +21,7 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
       if (key === 'backspace') {
         removeCharacter()
       } else if (key.match(/^[a-z]$/)) {
-        if (!selectedCharacters.has(key)) {
-          addCharacter(key)
-        }
+        addCharacter(key)
       }
 
       setLastPress(key)
@@ -31,13 +29,13 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
     document.addEventListener('keydown', listener)
     const cleanup = () => document.removeEventListener('keydown', listener)
     return cleanup
-  }, [selectedCharacters, removeCharacter, addCharacter, setLastPress])
+  }, [removeCharacter, addCharacter, setLastPress])
 
   // Handle events from keyboard UI
   const onButtonClick = character => {
     if (character === 'backspace') {
       removeCharacter()
-    } else if (!selectedCharacters.has(character)) {
+    } else {
       addCharacter(character)
     }
 
@@ -45,9 +43,7 @@ export default function Keyboard ({ selectedCharacters = new Set(), addCharacter
   }
 
   // Handle touch hold events
-  // TODO - handle addding characters
   const onTouchStart = character => {
-    console.log('start', character)
     if (character === 'backspace') {
       setRepeatedBackspace(true)
     }
