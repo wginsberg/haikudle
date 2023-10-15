@@ -50,56 +50,20 @@ export function addInputToHaiku (haiku = [], input = '') {
 * Each character returned will fill in a previously un-guessed or incorrectly guessed tile
 */
 export function generateHintSequence (haiku = [], censoredHaiku = [], input = '') {
-  const haikuWords = haiku.join('').split(' ')
-  const haikuWithInputString = addInputToHaiku(censoredHaiku, input).characters.join('').split(' ')
+  const haikuWithInput = addInputToHaiku(censoredHaiku, input).characters
 
-  let firstLineHintSequence
-
-  // When no input is provided we give hints from the first line of the haiku
-  if (!input) {
-    const missingChars = new Set()
-    for (const i in haikuWords) {
-      const word = haikuWords[i]
-      if (word === '/') break
-      for (const j in word) {
-        if (!haikuWithInputString[i][j].match(/[*a-z]/)) continue
-        if (haikuWithInputString[i][j] !== haikuWords[i][j]) {
-          missingChars.add(haikuWords[i][j])
-        }
-      }
+  const incorrectChars = new Set()
+  console.log({haiku})
+  for (let i = 0; i < haiku.length; i++) {
+    if (haiku[i] !== haikuWithInput[i]) {
+      incorrectChars.add(haiku[i])
     }
-
-    firstLineHintSequence = [...missingChars].sort().join('')
-  }
-
-  if (firstLineHintSequence) return firstLineHintSequence
-
-  // Otherwise we give hints from the next word
-
-  let nextWordHintSequence
-
-  for (let i = 1; i < haikuWithInputString.length; i++) {
-    if (haikuWithInputString[i].includes('*')) {
-      const prevWordGuessed = haikuWithInputString[i - 1]
-      const prevWord = haikuWords[i - 1]
-      const prevWordIsCorrect = prevWord === prevWordGuessed
-
-      const hintIndex = prevWordIsCorrect ? i : i - 1
-      const hintWord = haikuWords[hintIndex]
-      const hintWordGuess = haikuWithInputString[hintIndex]
-
-      const missingChars = new Set()
-      for (const j in hintWord) {
-        if (hintWord[j] !== hintWordGuess[j]) {
-          missingChars.add(hintWord[j])
-        }
-      }
-      nextWordHintSequence = [...missingChars].sort().join('')
-      if (nextWordHintSequence) return nextWordHintSequence
+    if (incorrectChars.size === 3) {
+      break
     }
   }
 
-  return ''
+  return [...incorrectChars].sort().join('')
 }
 
 export function isSolved (censoredHaiku = [], haiku = '') {

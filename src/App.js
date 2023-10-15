@@ -44,8 +44,9 @@ function App () {
   }
 
   const addHint = () => {
-    const hintSequence = generateHintSequence(haikuString.split(), haikuWithHints, input)
+    const hintSequence = generateHintSequence(haikuString.split(''), haikuWithHints, input)
     const newHint = getRandomHint(hintSequence)
+    console.log({hintSequence,newHint})
     setHints(hints => new Set([...hints, newHint]))
     setInput('')
   }
