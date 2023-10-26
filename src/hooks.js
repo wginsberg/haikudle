@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { numWordsSolved } from './util'
+import daily from './daily.json'
 
 export function useTemporaryState (initalState, timeout = 100) {
   const [state, setState] = useState(initalState)
@@ -81,4 +81,13 @@ export function useHintButtonShake (censoredHaiku, timeout = 10000, maxShakes = 
   }
 
   return shouldShake
+}
+
+export function useDailyHaiku() {
+  const { haiku, tomorrowHaiku, date } = daily
+  let isPreviewForTomorrow = window.location.pathname === "/tomorrow"
+
+  return isPreviewForTomorrow
+    ? { haiku: tomorrowHaiku, date}
+    : { haiku, date }
 }

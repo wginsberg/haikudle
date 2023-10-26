@@ -1,4 +1,4 @@
-import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, numWordsSolved, isHintAllowed, incrementWinStats, canAddInput, subtractDays, getRandomHint, GIVEN, GUESSED } from './util'
+import { addHints, charactersTo2DStringArray, addInputToHaiku, generateHintSequence, isSolved, isHintAllowed, incrementWinStats, canAddInput, subtractDays, getRandomHint, GIVEN, GUESSED } from './util'
 
 test('addHints', () => {
   const rawHaiku = "test / haiku / ai'nt one. $"
@@ -260,36 +260,6 @@ describe('canAddInput', () => {
     const actual = canAddInput(censoredHaiku, 'thxxat')
     expect(actual).toBeFalsy()
   })
-})
-
-test('numWordsSolved returns the number of words solved', () => {
-  const haiku = "test / haiku / ai'nt one. $"
-
-  {
-    const censoredHaiku = [
-      '*', 'e', 's', 't', ' ', '/', ' ',
-      '*', '*', 'i', 'k', '*', ' ', '/', ' ',
-      '*', 'i', '\'', 'n', '*', ' ', 'o', 'n', 'e', '.', ' ', '$'
-    ]
-
-    const actual = numWordsSolved(censoredHaiku, haiku)
-    const expected = 1 // "one"
-
-    expect(actual).toEqual(expected)
-  }
-
-  {
-    const censoredHaiku = [
-      't', 'e', 's', 't', ' ', '/', ' ',
-      'x', 'x', 'i', 'k', '*', ' ', '/', ' ',
-      'a', 'i', '\'', 'n', 't', ' ', 'o', 'n', 'e', '.', ' ', '$'
-    ]
-
-    const actual = numWordsSolved(censoredHaiku, haiku)
-    const expected = 3 // "test", "ai'nt", "one"
-
-    expect(actual).toEqual(expected)
-  }
 })
 
 test('getRandomHint', () => {

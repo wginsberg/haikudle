@@ -18,12 +18,13 @@ try {
 
 const lines = data.toString().split('\n')
 const haiku = lines[todayIndex]
+const tomorrowHaiku = lines[todayIndex + 1]
 
 const year = today.getFullYear();
 const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 const date = `${year}-${month}-${day}`;
 
-const json = JSON.stringify({ haiku, date })
+const json = JSON.stringify({ haiku, tomorrowHaiku, date })
 
 console.log(json)
