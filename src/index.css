@@ -23,6 +23,11 @@ body {
   display: flex;
   justify-content: center;
   padding: 8px;
+  background: black;
+}
+
+h1 {
+  color: orange;
 }
 
 #root {
@@ -40,7 +45,7 @@ body {
 
 .tile {
   display: inline-flex;
-  background-color: greenyellow;
+  background-color: orange;
   justify-content: center;
   align-items: center;
   font-size: large;
@@ -91,14 +96,14 @@ body {
 }
 
 .tile-complete {
-  background-color: greenyellow;
+  background-color: orange;
   border-color: black;
   border-radius: 4px;
   animation: 1s ease-in flip;
 }
 
 .tile-correct {
-  background-color: greenyellow;
+  background-color: orange;
 }
 
 .line {
@@ -176,7 +181,7 @@ body {
 }
 
 .keyboardButtonContent-selected {
-  background-color: greenyellow;
+  background-color: orange;
   cursor: initial;
 }
 
@@ -285,4 +290,5 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: orange;
 }
