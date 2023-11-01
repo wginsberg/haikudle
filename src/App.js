@@ -94,7 +94,7 @@ function App () {
       return (
         <div className='app'>
           <div>
-            <h1>Spooky Haikudle <span>🎃</span></h1>
+            <h1>Spooky Haikudle</h1>
             <Haiku
               input={input}
               haiku={haikuString.split('')}
