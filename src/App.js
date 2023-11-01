@@ -68,14 +68,11 @@ function App () {
     case GAME_STATE_PLAY:
       return (
         <div className='app'>
-          <div>
-            <h1>Spooky Haikudle</h1>
-            <Haiku
-              input={input}
-              haiku={haikuString.split('')}
-              haikuCensored={haikuWithHints}
-            />
-          </div>
+          <Haiku
+            input={input}
+            haiku={haikuString.split('')}
+            haikuCensored={haikuWithHints}
+          />
           <div className='helpActions'>
             <button
               onClick={addHint}
@@ -93,14 +90,11 @@ function App () {
     case GAME_STATE_LOST:
       return (
         <div className='app'>
-          <div>
-            <h1>Spooky Haikudle</h1>
-            <Haiku
-              input={input}
-              haiku={haikuString.split('')}
-              haikuCensored={haikuWithHints}
-            />
-          </div>
+          <Haiku
+            input={input}
+            haiku={haikuString.split('')}
+            haikuCensored={haikuWithHints}
+          />
           <Scoreboard gameState={gameState} winStats={winStats} />
         </div>
       )
